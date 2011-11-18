@@ -1,7 +1,6 @@
 package redis
 
 import (
-	"container/vector"
 	"encoding/json"
 	"fmt"
 
@@ -663,9 +662,9 @@ func BenchmarkMultipleGet(b *testing.B) {
 
 func BenchmarkMGet(b *testing.B) {
 	client.Set("bmg", []byte("hi"))
-	var vals vector.StringVector
+	var vals []string
 	for i := 0; i < b.N; i++ {
-		vals.Push("bmg")
+		vals = append(vals, "bmg")
 	}
 	client.Mget(vals...)
 	client.Del("bmg")
@@ -718,9 +717,9 @@ func BenchmarkJsonMget(b *testing.B) {
 	od, _ := json.Marshal(testObj)
 	client.Set("tjs", od)
 
-	var vals vector.StringVector
+	var vals []string
 	for i := 0; i < b.N; i++ {
-		vals.Push("tjs")
+		vals = append(vals, "tjs")
 	}
 
 	data, _ := client.Mget(vals...)
