@@ -1,7 +1,7 @@
 
 include $(GOROOT)/src/Make.inc
 
-TARG=redis
+TARG=github.com/aschobel/redis.go
 GOFILES=\
 	redis.go\
 
