@@ -8,7 +8,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net"
-	"os"
+	"syscall"
 	"reflect"
 	"strconv"
 	"strings"
@@ -195,7 +195,7 @@ func (client *Client) sendCommand(cmd string, args ...string) (data interface{},
 
 	b = commandBytes(cmd, args...)
 	data, err = client.rawSend(c, b)
-	if err == io.EOF || err == os.EPIPE {
+	if err == io.EOF || err == syscall.EPIPE {
 		c, err = client.openConnection()
 		if err != nil {
 			//add the client back to the queue
